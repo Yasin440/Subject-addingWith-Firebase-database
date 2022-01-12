@@ -1,0 +1,30 @@
+.header{
+    background-color: beige;
+}
+.header .logo{
+    color: brown;
+    font-weight: bold;
+    font-size: larger;
+    letter-spacing: 2px;
+}
+.header .nav-bar{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .nav-bar .nav-right a{
+    text-decoration: none;
+    font-weight: 500;
+    color: brown;
+    margin: 0 5px;
+    padding: 4px 10px 7px 10px;
+    border-radius: 4px;
+}
+.header .toggleBtn{
+    display: none;
+}
+@media only screen and (min-width: 500px) {
+
+}
