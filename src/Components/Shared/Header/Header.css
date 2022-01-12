@@ -34,14 +34,14 @@
         display: none;
     }
     .header .nav-right{
-    width:100%
+        width:100%;
     }
     .header .toggleBtn{
-    display: block;
+        display: block;
     }
     .header .nav-bar{
         flex-direction: column;
-        align-items:flex-start
+        align-items:flex-start;
     }
     .header .nav-right a{
         display: block;
