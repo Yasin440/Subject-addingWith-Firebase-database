@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
@@ -12,75 +12,66 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
+import database from '../../firebase.config';
+import { ref, onValue, set } from "firebase/database";
 
 const Home = () => {
-    function createData(name, calories) {
-        return {
-            name,
-            calories,
-            history: [
-                {
-                    date: '2020-01-05',
-                    customerId: '11091700sfgrgtrhtr lerahgrtnghtr trahntrnhtnht trnghtrnhtnhnhth tkotrnhntrht trnhtranhtrnh rt nhktnahtrnht tn hktnrhntrhntrn',
-                },
-                {
-                    date: '2020-01-02',
-                    customerId: 'Anonymous',
-                },
-            ],
-        };
+    const [data, setData] = useState();
+    useEffect(() => {
+        const starCountRef = ref(database, 'Subject');
+        onValue(starCountRef, (snapshot) => {
+            const subjectList = [];
+            const data = snapshot.val();
+            for (let id in data) {
+                subjectList.push({ id, ...data[id] })
+                console.log(data[id]);
+            }
+            console.log(subjectList);
+            setData(subjectList);
+        });
+    }, [])
+    //handle delete data
+    const handleDelete = (id) => {
+        const postListRef = ref(database, `Subject/${id}`);
+        set(postListRef, null);
     }
-
-    function Row(props) {
-        const { row } = props;
-
-        return (
-            <React.Fragment>
-                <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                    <TableCell component="th" scope="row">
-                        {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">Notes</TableCell>
-                    <TableCell align="right">
-                        <EditIcon />
-                        <DeleteForeverIcon style={{ color: 'red' }} />
-                    </TableCell>
-                </TableRow>
-
-            </React.Fragment >
-        );
-    }
-
-    const rows = [
-        createData('Frozen yoghurt', 159, 6.0),
-        createData('Ice cream sandwich', 237, 9.0),
-        createData('Eclair', 262, 16.0),
-        createData('Cupcake', 305, 3.7),
-        createData('Gingerbread', 356, 16.0),
-    ];
     return (
         <div className="table">
-            <TableContainer style={{ backgroundColor: '#a52a2a17' }} component={Paper}>
+            <TableContainer sx={{ backgroundColor: '#a52a2a17' }} component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Subject</TableCell>
-                            <TableCell align="right">Topics</TableCell>
-                            <TableCell align="right">Note</TableCell>
-                            <TableCell align="right">Action</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', color: 'brown' }} align="left">Subject</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', color: 'brown' }} align="left">Topics</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', color: 'brown' }} align="left">Note</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold', color: 'brown' }} align="left">Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <Row key={row.name} row={row} />
-                        ))}
+                        {data?.map((list) => {
+                            return (
+                                <React.Fragment key={list.id}>
+                                    <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+                                        <TableCell component="th" scope="row">
+                                            {list.subject}
+                                        </TableCell>
+                                        <TableCell align="left">{list.topic}</TableCell>
+                                        <TableCell align="left">{list.notice}</TableCell>
+                                        <TableCell align="left">
+                                            <EditIcon sx={{ cursor: 'pointer', marginRight: '1rem' }} />
+                                            <DeleteForeverIcon onClick={() => handleDelete(list.id)} sx={{ color: 'red', cursor: 'pointer' }} />
+                                        </TableCell>
+                                    </TableRow>
+
+                                </React.Fragment >
+                            )
+                        })}
                     </TableBody>
                 </Table>
             </TableContainer>
             <div style={{ textAlign: 'center', margin: '2rem' }}>
                 <Link to='/addSubject'>
-                    <Button style={{ align: 'center' }} variant="contained"><AddIcon />Add New</Button>
+                    <Button sx={{ align: 'center' }} variant="contained"><AddIcon />Add New</Button>
                 </Link>
             </div>
         </div>
