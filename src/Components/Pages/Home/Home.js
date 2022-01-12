@@ -14,6 +14,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Button from '@mui/material/Button';
 import database from '../../firebase.config';
 import { ref, onValue, set } from "firebase/database";
+import { toast } from 'react-toastify';
 
 const Home = () => {
     const [data, setData] = useState();
@@ -32,8 +33,12 @@ const Home = () => {
     }, [])
     //handle delete data
     const handleDelete = (id) => {
-        const postListRef = ref(database, `Subject/${id}`);
-        set(postListRef, null);
+        if (window.confirm("Are you sure to delete..?")) {
+            const postListRef = ref(database, `Subject/${id}`);
+            set(postListRef, null);
+            toast.success('Delete Subject List Successfully.');
+        }
+
     }
     return (
         <div className="table">
@@ -58,7 +63,9 @@ const Home = () => {
                                         <TableCell align="left">{list.topic}</TableCell>
                                         <TableCell align="left">{list.notice}</TableCell>
                                         <TableCell align="left">
-                                            <EditIcon sx={{ cursor: 'pointer', marginRight: '1rem' }} />
+                                            <Link to={`/editSubject/${list.id}`}>
+                                                <EditIcon sx={{ cursor: 'pointer', marginRight: '1rem' }} />
+                                            </Link>
                                             <DeleteForeverIcon onClick={() => handleDelete(list.id)} sx={{ color: 'red', cursor: 'pointer' }} />
                                         </TableCell>
                                     </TableRow>

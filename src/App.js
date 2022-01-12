@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import AddSubject from './Components/Pages/AddSubject/AddSubject';
-import EditSubject from './Components/Pages/EditSubject/EditSubject';
 import Home from './Components/Pages/Home/Home';
 import View from './Components/Pages/View/View';
 import { ToastContainer } from 'react-toastify';
@@ -17,7 +16,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/addSubject" element={<AddSubject />} />
-        <Route path="/editSubject/:id" element={<EditSubject />} />
+        <Route path="/editSubject/:_id" element={<AddSubject />} />
         <Route path="/view/:id" element={<View />} />
       </Routes>
     </BrowserRouter>
