@@ -25,9 +25,7 @@ const Home = () => {
             const data = snapshot.val();
             for (let id in data) {
                 subjectList.push({ id, ...data[id] })
-                console.log(data[id]);
             }
-            console.log(subjectList);
             setData(subjectList);
         });
     }, [])

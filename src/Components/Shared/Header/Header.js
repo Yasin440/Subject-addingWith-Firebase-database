@@ -1,15 +1,16 @@
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Header.css';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import Button from '@mui/material/Button';
 
 const Header = () => {
-
+    const [toggle, setToggle] = useState(false);
     return (
         <div className='header'>
             <div className="nav-bar">
                 <p className="logo">My Subject</p>
-                <div className="nav-right">
+                <div className={`nav-right ${toggle ? 'toggleBtnActive' : ""}`}>
                     <NavLink
                         style={({ isActive }) => {
                             return {
@@ -56,8 +57,7 @@ const Header = () => {
                     </NavLink>
                 </div>
                 <div className="toggleBtn">
-                    <Button style={{ color: 'brown' }}><DehazeIcon /></Button>
-
+                    <Button onClick={() => setToggle(!toggle)} className="toggleBtn" sx={{ color: 'brown', cursor: 'pointer' }}><DehazeIcon /></Button>
                 </div>
             </div>
         </div >

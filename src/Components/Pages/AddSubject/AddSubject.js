@@ -17,7 +17,6 @@ const initialState = {
 const AddSubject = () => {
     // const [data, setData] = useState({});
     const [state, setState] = useState(initialState);
-    console.log(state);
     const { subject, topic, notice } = state;
     const navigate = useNavigate();
     const { _id } = useParams();
