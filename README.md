@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Visit site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is live with [Subject Adding with firebase realtime database ](https://student-subject.web.app/)
 
 ## Available Scripts
 
